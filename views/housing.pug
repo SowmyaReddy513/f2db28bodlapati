@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  h1= title
+  div(class="container-fluid")
+    div(class="row")
+        - 
+            let results = [
+                {
+                "house_zone" : "Residential",
+                "house_plan" : "Single-Bed",
+                "house_cost" : 150000
+                },
+                {
+                "house_zone" : "Apartment",
+                "house_plan" : "double-Bed",
+                "house_cost" : 130000
+                },
+            
+                
+                {
+                "house_zone" : "Apartment",
+                "house_plan" : "Single-Bed",
+                "house_cost" : 100000
+                },
+
+            ]
+        each h ,index in results
+            div(class="col-sm-2" onclick=`buy(${index})`) #{h.house_zone}<br><br>
+            div(class="col-sm-2" onclick=`buy(${index})`) #{h.house_plan}<br><br>
+            div(class="col-sm-2" onclick=`buy(${index})`) #{h.house_cost}
+
+            script.                
+                      function buy(itemNum)
+                      {
+                            alert(`You purchased item ${itemNum+1}`)
+                            
+                      }
+
+            
