@@ -1,4 +1,6 @@
 var Housing = require('../models/housing'); 
+
+
  
 // List of all Houses 
 exports.housing_lists = function(req, res) { 
@@ -23,4 +25,16 @@ exports.housing_delete = function(req, res) {
 // Handle Housing update form on PUT. 
 exports.housing_update_put = function(req, res) { 
     res.send('NOT IMPLEMENTED: Housing update PUT' + req.params.id); 
+}; 
+
+// List of all Houses 
+exports.housing_lists = async function(req, res) { 
+    try{ 
+        theHouses = await Housing.find(); 
+        res.send(theHouses); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
 }; 
