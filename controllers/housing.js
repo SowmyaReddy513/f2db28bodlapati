@@ -38,3 +38,16 @@ exports.housing_lists = async function(req, res) {
         res.send(`{"error": ${err}}`); 
     }   
 }; 
+
+// VIEWS 
+// Handle a show all view 
+exports.housing_view_all_Page = async function(req, res) { 
+    try{ 
+        theHouses = await Housing.find(); 
+        res.render('housing', { title: 'Housing Search Results', results: theHouses }); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
+}; 
