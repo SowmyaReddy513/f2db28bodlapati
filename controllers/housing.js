@@ -12,10 +12,23 @@ exports.housing_detail = function(req, res) {
     res.send('NOT IMPLEMENTED: Housing detail: ' + req.params.id); 
 }; 
  
-// Handle Housing create on POST. 
-exports.housing_create_post = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Housing create POST'); 
-}; 
+// Handle House create on POST. 
+exports.housing_create_post = async function(req, res) { 
+    console.log(req.body) 
+    let document = new Housing(); 
+    
+    document.house_zone = req.body.house_zone; 
+    document.house_plan = req.body.house_plan; 
+    document.house_cost = req.body.house_cost; 
+    try{ 
+        let result = await document.save(); 
+        res.send(result); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
+};  
  
 // Handle Housing delete form on DELETE. 
 exports.housing_delete = function(req, res) { 
