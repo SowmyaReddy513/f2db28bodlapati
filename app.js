@@ -3,12 +3,65 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var Housing = require("./models/housing");
+
+require('dotenv').config(); 
+const connectionString =  
+process.env.MONGO_CON 
+mongoose = require('mongoose'); 
+mongoose.connect(connectionString,  
+{useNewUrlParser: true, 
+useUnifiedTopology: true});
+
+//Get the default connection 
+var db = mongoose.connection; 
+ 
+//Bind connection to error event  
+db.on('error', console.error.bind(console, 'MongoDB connection error:')); 
+db.once("open", function(){ 
+  console.log("Connection to DB succeeded")}); 
+
+
+
+// We can seed the collection if needed on server start 
+async function recreateDB(){ 
+  // Delete everything 
+  await Housing.deleteMany(); 
+ 
+let instance1 = new Housing({house_zone:"Villa",  house_plan:'Duplex', house_cost:1000000}); 
+  instance1.save( function(err,doc) { 
+      if(err) return console.error(err); 
+      console.log("First object saved") 
+  }); 
+
+  let instance2 = new 
+Housing({house_zone:"Apartment",  house_plan:'Single-Bed', 
+house_cost:180000}); 
+  instance2.save( function(err,doc) { 
+      if(err) return console.error(err); 
+      console.log("Second object saved") 
+  });
+
+  let instance3 = new 
+Housing({house_zone:"Residential",  house_plan:'Triple-Bed', 
+house_cost:800000}); 
+  instance3.save( function(err,doc) { 
+      if(err) return console.error(err); 
+      console.log("Third object saved") 
+  });
+} 
+ 
+let reseed = true; 
+if (reseed) { recreateDB();} 
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var housingRouter = require('./routes/housing');
 var gridRouter = require('./routes/gridbuild');
 var selectorRouter = require('./routes/selector');
+var resourceRouter = require('./routes/resource');
 
 
 var app = express();
@@ -28,6 +81,7 @@ app.use('/users', usersRouter);
 app.use('/housing', housingRouter);
 app.use('/gridbuild', gridRouter);
 app.use('/selector', selectorRouter);
+app.use('/resource', resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
