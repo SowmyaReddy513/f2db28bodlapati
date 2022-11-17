@@ -1,0 +1,24 @@
+extends layout 
+ 
+block content 
+  h1= title 
+  if (toShow == null) 
+    h2 No instance to Detail 
+  else  
+    - let housingid = toShow._id 
+    - let house_zone = toShow.house_zone 
+    - let house_plan = toShow.house_plan 
+    - let house_cost = toShow.house_cost 
+    div 
+        div.row 
+        div(class='costumeAttr mr-3') Housing ID is: 
+        div #{housingid} 
+        div.row 
+        div(class='costumeAttr mr-3') House Zone is: 
+        div #{house_zone} 
+        div.row 
+        div(class='costumeAttr mr-3') House Plan is: 
+        div #{house_plan} 
+        div.row 
+        div(class='costumeAttr mr-3') House Cost is: 
+        div #{house_cost} 
