@@ -3,7 +3,7 @@ extends layout
 block content
   h1= title
   div(class="container-fluid")
-    div(class="row")
+    div(class="row m-1")
         - let items = results 
             //- let results = [
             //-     {
@@ -25,10 +25,15 @@ block content
             //-     },
 
             //- ]
-        each h ,index in results
-            div(class="col-sm-2" onclick=`buy(${index})`) #{h.house_zone}<br><br>
-            div(class="col-sm-2" onclick=`buy(${index})`) #{h.house_plan}<br><br>
-            div(class="col-sm-2" onclick=`buy(${index})`) #{h.house_cost}
+        each item  ,index in results
+            
+            - let destination = `dispatch(\"/housing/update?id=${item._id}\")` 
+            div(class="row-sm-2", class="m-1") House Zone:  #{item.house_zone}with House Plan: (#{item.house_plan}) is #{item.house_cost}
+              button.btn( class="btn-primary ml-1", onclick= destination) Update  
+
+            //- div(class="col-sm-2" onclick=`buy(${index})`) #{h.house_zone}<br><br>
+            //- div(class="col-sm-2" onclick=`buy(${index})`) #{h.house_plan}<br><br>
+            //- div(class="col-sm-2" onclick=`buy(${index})`) #{h.house_cost}
 
             script.                
                       function buy(itemNum)
@@ -36,3 +41,6 @@ block content
                             alert(`You purchased item ${itemNum+1}`)
                             
                       }
+                      function dispatch(path){ 
+                            window.location.href=path 
+                      } 
